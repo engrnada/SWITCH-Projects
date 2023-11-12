@@ -1,0 +1,47 @@
+/*
+ * SW_Main.c
+ *
+ *  Created on: Nov 12, 2023
+ *      Author: Nada
+ */
+
+
+
+#include "STD_TYPES.h"
+#include "BIT_MATH.h"
+
+#include "DIO_interface.h"
+#include "DIO_private.h"
+#include "SW_Interface.h"
+#include "SSD_interface.h"
+#include "SSD_Private.h"
+#include "avr/delay.h"
+
+SW_Adjusting Switch1 = {DIO_PORTB, DIO_PIN0, SW_INT_PULL_UP};
+SSD_Adjusting SSD1 =   {Common_cathode,SSD_PORTC, SSD_PORTC, SSD_PIN7};
+
+
+int main (){
+
+	SW_VoidInit(Switch1);
+	SSD_VoidInitPort(SSD1);
+	SSD_VoidEnable(SSD1);
+	int i = 0;
+	while(1){
+
+	for(i=0; i<10; i++){
+		if(SW_GetPressed(Switch1)){
+			SSD_VoidSendNumber(SSD1, i);
+			_delay_ms (250);
+
+		}
+		else {
+			SSD_VoidDisable(SSD1);
+			_delay_ms (250);
+		}
+	}
+
+	}
+
+	return 0;
+}
