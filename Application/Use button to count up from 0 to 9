@@ -19,7 +19,6 @@
 #include "LED_interface.h"
 
 SW_Adjusting Switch1 = {DIO_PORTB, DIO_PIN0, SW_INT_PULL_UP};
-LED_Adjusting LED1 =   {LED_PORTA, LED_PIN0, Active_High};
 SSD_Adjusting SSD1 =   {Common_cathode,SSD_PORTC, SSD_PORTC, SSD_PIN7};
 
 
