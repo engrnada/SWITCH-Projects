@@ -1,0 +1,205 @@
+/*
+ * SW_Main.c
+ *
+ *  Created on: Nov 12, 2023
+ *      Author: Nada
+ */
+
+
+
+#include "STD_TYPES.h"
+#include "BIT_MATH.h"
+
+#include "DIO_interface.h"
+#include "DIO_private.h"
+#include "SW_Interface.h"
+#include "SSD_interface.h"
+#include "SSD_Private.h"
+#include "avr/delay.h"
+#include "LED_interface.h"
+
+SW_Adjusting Switch [8] = {{DIO_PORTA, DIO_PIN0, SW_EXT_PULL_UP}, {DIO_PORTA, DIO_PIN1, SW_EXT_PULL_UP},
+{DIO_PORTA, DIO_PIN2, SW_EXT_PULL_UP}, {DIO_PORTA, DIO_PIN3, SW_EXT_PULL_UP},
+{DIO_PORTA, DIO_PIN4, SW_EXT_PULL_UP}, {DIO_PORTA, DIO_PIN5, SW_EXT_PULL_UP},
+{DIO_PORTA, DIO_PIN6, SW_EXT_PULL_UP}, {DIO_PORTA, DIO_PIN7, SW_EXT_PULL_UP}
+};
+LED_Adjusting LED [8] =   {{LED_PORTC, LED_PIN0, Active_High}, {LED_PORTC, LED_PIN1, Active_High},
+{LED_PORTC, LED_PIN2, Active_High}, {LED_PORTC, LED_PIN3, Active_High},
+{LED_PORTC, LED_PIN4, Active_High}, {LED_PORTC, LED_PIN5, Active_High},
+{LED_PORTC, LED_PIN6, Active_High}, {LED_PORTC, LED_PIN7, Active_High}
+};
+//SSD_Adjusting SSD1 =   {Common_cathode,SSD_PORTC, SSD_PORTC, SSD_PIN7};
+
+
+int main (){
+	int i = 0;
+
+	for (i=0; i<8; i++){
+
+		SW_VoidInit(Switch[i]);
+
+	}
+
+	for (i=0; i<8; i++){
+
+	LED_VoidInit(LED [i]);
+
+	}
+
+   while (1){
+for (i = 0; i < 8; i++){
+	switch (i){
+
+	case 0 :
+		if( SW_GetPressed (Switch[0])){
+
+				  for (i = 0; i < 8; i++){
+			 				LED_VoidOn(LED [i]);
+			 			}
+					_delay_ms (100);
+
+				  for (i = 0; i < 8; i++){
+					LED_VoidOf(LED [i]);
+				  }
+					_delay_ms (100);
+
+		}
+		break;
+	case 1 :
+		if( SW_GetPressed (Switch[1])){
+
+		  		  for (i = 0; i < 8; i++){
+		  	 				LED_VoidOn(LED [i]);
+		  	 	  			_delay_ms (100);
+		  	 			}
+
+		  		  for (i = 0; i < 8; i++){
+		  			LED_VoidOf(LED [i]);
+		  		  }
+		  			_delay_ms (100);
+
+		  		   }
+		break;
+	case 2 :
+		if( SW_GetPressed (Switch[2])){
+
+			  for (i = 0; i < 8; i++){
+		    	 				LED_VoidOn(LED [i]);
+		    	 	  			_delay_ms (25);
+		    	    			LED_VoidOf(LED [i]);
+		    	 	  			_delay_ms (25);
+		    	 			}
+		    		  for (i = 8; i >= 0; i--){
+		    			  LED_VoidOn(LED [i]);
+		    			   _delay_ms (25);
+		    			   LED_VoidOf(LED [i]);
+		    			   _delay_ms (25);
+		    		  }
+		    			_delay_ms (10);
+
+		  		   }
+		break;
+	case 3 :
+		if( SW_GetPressed (Switch[3])){
+
+			  for (i = 0; i < 8; i++){
+		    	 				LED_VoidOn(LED [i]);
+		    	 	  			_delay_ms (25);
+		    	    			LED_VoidOf(LED [i]);
+		    	 	  			_delay_ms (25);
+		    	 			}
+		    		  for (i = 0; i < 8; i++){
+		    			   LED_VoidOf(LED [i]);
+
+		    		  }
+		    			_delay_ms (10);
+
+		  		   }
+		break;
+	case 4 :
+		if( SW_GetPressed (Switch[4])){
+
+			  for (i = 8; i >= 0; i--){
+		    	 				LED_VoidOn(LED [i]);
+		    	 	  			_delay_ms (25);
+		    	    			LED_VoidOf(LED [i]);
+		    	 	  			_delay_ms (25);
+		    	 			}
+		    		  for (i = 0; i < 8; i++){
+		    			   LED_VoidOf(LED [i]);
+
+		    		  }
+		    			_delay_ms (10);
+
+		  		   }
+		break;
+	case 5 :
+		if( SW_GetPressed (Switch[5])){
+
+			  for (i = 0; i < 4; i++){
+				   LED_VoidOn(LED[7-i]);
+				    LED_VoidOn(LED[i]);
+	    			_delay_ms (25);
+		    	 			}
+		     for (i = 0; i < 8; i++){
+		    		 LED_VoidOf(LED[i]);
+
+		    		  }
+		    			_delay_ms (25);
+
+		  		   }
+		break;
+
+	case 6 :
+		if( SW_GetPressed (Switch[6])){
+
+			  for (i = 0; i < 4; i++){
+				   LED_VoidOn(LED[3-i]);
+				    LED_VoidOn(LED[4+i]);
+	    			_delay_ms (25);
+		    	 			}
+		    		  for (i = 0; i < 8; i++){
+		    			   LED_VoidOf(LED[i]);
+		    		  }
+		    			_delay_ms (25);
+
+		  		   }
+		break;
+
+	case 7 :
+		if( SW_GetPressed (Switch[7])){
+
+			  for (i = 0; i < 8; i++){
+				  LED_VoidOn(LED[7-i]);
+				  LED_VoidOn(LED[i]);
+				  _delay_ms (25);
+			  }
+
+				 for (i = 0; i < 8; i++){
+
+				          LED_VoidOf(LED[7-i]);
+				          LED_VoidOf(LED[i]);
+				 }
+	    			_delay_ms (25);
+	       for (i = 0; i < 4; i++){
+	    	              LED_VoidOn(LED[3-i]);
+	    				  LED_VoidOn(LED[4+i]);
+	    				   _delay_ms (25);
+	    		}
+			 for (i = 0; i < 8; i++){
+
+					          LED_VoidOf(LED[7-i]);
+					          LED_VoidOf(LED[i]);
+					 }
+		    			_delay_ms (25);
+
+
+
+		  		   }
+		break;
+	}
+
+   }
+   }
+	return 0;
+}
